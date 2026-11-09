@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { Server } from "./server.ts";
-import { pool } from "./conf/dbConnection.ts";
+import sequelizeConnection from "./conf/sequelize.connection.ts";
 import { AppRoutes } from "./routes/index.ts";
 
 dotenv.config();
@@ -9,7 +9,7 @@ const port = Number(process.env.PORT);
 
 async function main() {
   try {
-    await pool.query("SELECT 1");
+    await sequelizeConnection.connect();
     console.log("Database connected");
 
     const server = new Server({ port, routes: AppRoutes.router });
